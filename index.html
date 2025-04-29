@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Brave Soles VR Store</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Camera -->
+      <a-entity 
+      camera 
+      look-controls 
+      position="0 1.6 0" 
+      cursor="fuse: false; rayOrigin: mouse" 
+      raycaster="objects: .clickable">
+    </a-entity>
+    
+
+      <!-- Lighting -->
+      <a-sky color="#f5f3e7"></a-sky>
+      <a-light type="directional" position="-1 2 1" intensity="1.2" color="#fff9e6"></a-light>
+      <a-light type="ambient" color="#d2c8b0" intensity="0.5"></a-light>
+    
+      <!-- Ground -->
+      <a-plane rotation="-90 0 0" width="10" height="10" color="#e0d9cb"></a-plane>
+    
+      <!-- Shoe -->
+      <a-entity 
+      id="shoeModel" 
+      gltf-model="assets/sandal_shoes.glb" 
+      position="0 0.2 -3" 
+      scale="2 2 2" 
+      rotation="0 90 0"
+      show-info
+      class="clickable">
+    </a-entity>
+    
+    
+      <!-- Info Panel (moved inside the scene) -->
+      <a-entity id="infoPanel" visible="false" position="0 2 -2">
+        <a-plane color="#333" width="2" height="1" opacity="0.9"></a-plane>
+      
+        <a-text value="Handcrafted from recycled tires.\nMade by artisans in the Dominican Republic." 
+                color="#fff" 
+                position="0 0 0.01" 
+                align="center" 
+                width="1.8"
+                wrap-count="30">
+        </a-text>
+      
+        <!-- Close Button -->
+        <a-plane id="closeBtn" 
+        position="0 -0.35 0.02" 
+        width="0.4" 
+        height="0.15" 
+        color="#AA3333" 
+        class="clickable"
+        close-info>
+        </a-plane>
+
+      
+        <a-text value="Close" 
+                position="0 -0.35 0.03" 
+                align="center" 
+                color="#fff" 
+                width="1">
+        </a-text>
+      </a-entity>
+      
+    </a-scene>
+    <script src="script.js"></script>    
+  </body>
+</html>
+
