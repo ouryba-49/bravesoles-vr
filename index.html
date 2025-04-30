@@ -6,14 +6,29 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   </head>
   <body>
-    <a-scene>
+    <!-- INTRO CANVAS -->
+    <div id="introCanvas" style="position: absolute; top: 0; left: 0; 
+      width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); 
+      display: flex; align-items: center; justify-content: center; 
+      flex-direction: column; color: white; font-family: sans-serif; z-index: 999;">
+      <h1 style="margin-bottom: 20px;">Welcome to Brave Soles VR</h1>
+      <button onclick="startExperience()" style="padding: 15px 30px; font-size: 18px; cursor: pointer;">
+        Enter VR Experience
+      </button>
+    </div>
 
+    <a-scene sound>
       <!-- ASSETS -->
       <a-assets>
         <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
         <img id="woodFloor" src="assets/wood_floor.jpg">
         <img id="logo" src="assets/bravesoles_logo.png">
+        <img id="mossWall" src="assets/photo-wall-texture-pattern.jpg">
+        <audio id="brandAudio" src="assets/brandstory.mp3" preload="auto" playsinline></audio>
+        <audio id="ambientAudio" src="assets/calm_ambient.mp3" preload="auto" playsinline></audio>
       </a-assets>
+
+      <!-- CAMERA -->
       <a-entity 
         camera 
         look-controls 
@@ -21,22 +36,13 @@
         cursor="rayOrigin: mouse" 
         raycaster="objects: .clickable">
       </a-entity>
-      <a-circle 
-        position="0 0.01 -3" 
-        radius="0.8" 
-        color="#000" 
-        opacity="0.08" 
-        rotation="-90 0 0">
-      </a-circle>
-
-
-
-      <!-- SKY / ENVIRONMENT -->
-      <a-sky id="sky" color="#ffedd5"></a-sky>
 
       <!-- LIGHTING -->
       <a-light type="ambient" color="#fff5e1" intensity="0.6"></a-light>
       <a-light type="directional" color="#ffddb3" intensity="0.4" position="2 4 1"></a-light>
+
+      <!-- SKY -->
+      <a-sky id="sky" color="#ffedd5"></a-sky>
 
       <!-- FLOOR -->
       <a-plane 
@@ -48,18 +54,25 @@
         material="roughness: 0.7; metalness: 0.1">
       </a-plane>
 
-      <a-sound src="url(assets/calm_ambient.mp3)" autoplay="true" loop="true" volume="0.3"></a-sound>
+      <!-- WALLS -->
+      <a-plane position="-5 2.5 0" rotation="0 90 0" width="10" height="5" src="#mossWall"></a-plane>
+      <a-plane position="5 2.5 0" rotation="0 -90 0" width="10" height="5" src="#mossWall"></a-plane>
+      <a-plane position="0 2.5 5" rotation="0 180 0" width="10" height="5" src="#mossWall"></a-plane>
 
+      <!-- LOGO WALL -->
+      <a-image src="#logo" position="0 3 -4" width="2.5" height="1.2"></a-image>
+      
+      <!-- WOOD WALL BEHIND LOGO -->
+      <a-plane 
+      position="0 2.5 -4.01" 
+      rotation="0 0 0" 
+      width="10" 
+      height="5" 
+      src="#woodFloor"
+      material="repeat: 2 2">
+      </a-plane>
 
-      <!-- LOGO -->
-      <a-image 
-        src="#logo" 
-        position="0 3 -4" 
-        width="2.5" 
-        height="1.2">
-      </a-image>
-
-      <!-- PRODUCT DISPLAY -->
+      <!-- PRODUCT -->
       <a-entity 
         id="shoeModel" 
         gltf-model="#sandalModel" 
@@ -70,6 +83,8 @@
         show-info
         animation="property: rotation; to: 0 450 0; dur: 15000; easing: linear; loop: true">
       </a-entity>
+
+      <a-circle position="0 0.01 -3" radius="0.8" color="#000" opacity="0.08" rotation="-90 0 0"></a-circle>
 
       <!-- INFO PANEL -->
       <a-entity id="infoPanel" visible="false" position="0 2 -2.5">
@@ -82,38 +97,18 @@
           width="1.8"
           wrap-count="30">
         </a-text>
-        <a-plane id="closeBtn" 
-                 position="0 -0.4 0.02" 
-                 width="0.4" 
-                 height="0.15" 
-                 color="#AA3333" 
-                 class="clickable"
-                 close-info>
-        </a-plane>
-        <a-text value="Close" 
-                position="0 -0.4 0.03" 
-                align="center" 
-                color="#fff" 
-                width="1">
-        </a-text>
+        <a-plane id="closeBtn" position="0 -0.4 0.02" width="0.4" height="0.15" color="#AA3333" class="clickable" close-info></a-plane>
+        <a-text value="Close" position="0 -0.4 0.03" align="center" color="#fff" width="1"></a-text>
       </a-entity>
-
-      <!-- PROMPT INPUT (HTML) -->
-      <div style="position: absolute; top: 20px; left: 20px; z-index: 999;">
-        <input type="text" id="promptInput" placeholder="Type 'earthy' or 'eco'" style="padding: 8px; font-size: 1em;">
-        <button onclick="submitPrompt()" style="padding: 8px;">Go</button>
-      </div>
-
     </a-scene>
 
     <!-- SCRIPT -->
     <script>
       function submitPrompt() {
         const prompt = document.getElementById('promptInput').value.toLowerCase();
-
         if (prompt.includes("earthy") || prompt.includes("eco")) {
           document.querySelector('#sky').setAttribute('color', '#d9e4cc');
-          document.querySelector('a-plane').setAttribute('src', '#woodFloor');
+          document.querySelector('a-plane[rotation="-90 0 0"]').setAttribute('src', '#woodFloor');
           document.querySelector('a-light[type="ambient"]').setAttribute('color', '#e9f5e1');
         } else {
           document.querySelector('#sky').setAttribute('color', '#ffedd5');
@@ -121,7 +116,6 @@
         }
       }
 
-      // Show info popup
       AFRAME.registerComponent('show-info', {
         init: function () {
           this.el.addEventListener('click', function () {
@@ -130,7 +124,6 @@
         }
       });
 
-      // Close popup
       AFRAME.registerComponent('close-info', {
         init: function () {
           this.el.addEventListener('click', function () {
@@ -138,6 +131,26 @@
           });
         }
       });
+
+      function startExperience() {
+        const canvas = document.getElementById('introCanvas');
+        canvas.style.transition = 'opacity 1s';
+        canvas.style.opacity = '0';
+        setTimeout(() => canvas.style.display = 'none', 1000);
+
+        const brandEntity = document.createElement('a-entity');
+        brandEntity.setAttribute('id', 'brandEntity');
+        brandEntity.setAttribute('sound', 'src: #brandAudio; autoplay: true');
+        document.querySelector('a-scene').appendChild(brandEntity);
+
+        // Trigger ambient music when brand story ends
+        brandEntity.addEventListener('sound-ended', () => {
+          const ambientEntity = document.createElement('a-entity');
+          ambientEntity.setAttribute('sound', 'src: #ambientAudio; autoplay: true; loop: true; volume: 0.6');
+          document.querySelector('a-scene').appendChild(ambientEntity);
+  });
+}
+
     </script>
   </body>
 </html>
