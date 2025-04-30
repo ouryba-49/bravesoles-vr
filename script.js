@@ -43,4 +43,10 @@ AFRAME.registerComponent('show-ophelia-info', {
   }
 });
 
+document.body.addEventListener('click', () => {
+  const audioEntity = document.querySelector('#audioController');
+  if (audioEntity && audioEntity.components.sound && !audioEntity.components.sound.isPlaying) {
+    audioEntity.components.sound.playSound();
+  }
+});
 

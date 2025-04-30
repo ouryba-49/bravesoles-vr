@@ -17,12 +17,18 @@
       </a-entity>
 
       <!-- Lighting -->
-      <a-sky color="#f5f3e7"></a-sky>
-      <a-light type="directional" position="-1 2 1" intensity="1.2" color="#fff9e6"></a-light>
-      <a-light type="ambient" color="#d2c8b0" intensity="0.5"></a-light>
+      <a-light type="ambient" color="#e4d8c4" intensity="0.4"></a-light>
+      <a-light type="directional" color="#fff7ec" intensity="0.2" position="2 3 1"></a-light>
+      <a-light type="point" color="#ffdfbb" intensity="0.2" position="0 2 -1.5"></a-light>
 
-      <!-- Ground -->
-      <a-plane rotation="-90 0 0" width="10" height="10" color="#e0d9cb"></a-plane>
+      <!-- Ground with wood texture -->
+      <a-plane 
+        rotation="-90 0 0" 
+        width="10" 
+        height="10" 
+        src="#woodFloor" 
+        repeat="4 4">
+      </a-plane>
 
       <!-- 3D Sandal Model -->
       <a-entity 
@@ -35,9 +41,9 @@
         class="clickable">
       </a-entity>
 
-      <!-- Ophelia Sandal Image (as product card) -->
+      <!-- Ophelia Sandal Image (product card) -->
       <a-image 
-        src="assets/Ophelia_Caramel_TopView.jpg" 
+        src="#ophelia" 
         position="2 1.5 -3" 
         width="1.2" 
         height="0.9" 
@@ -85,38 +91,25 @@
         </a-text>
       </a-entity>
 
-      <!-- Assets -->
-      <a-assets>
-        <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
-      </a-assets>
-
-      <a-assets>
-        <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
-        <img id="woodFloor" src="assets/wood_floor.jpg">
-      </a-assets>
-      <a-plane 
-        rotation="-90 0 0" 
-        width="10" 
-        height="10" 
-        src="#woodFloor" 
-        repeat="4 4">
-      </a-plane>
-
-      <img id="logo" src="assets/bravesoles_logo.png">
+      <!-- Brave Soles Logo -->
       <a-image 
         src="#logo" 
         position="0 3 -4" 
         width="2" 
         height="0.75">
       </a-image>
-      <a-light type="hemisphere" color="#ffffff" groundColor="#886644" intensity="0.6" position="0 4 0"></a-light>
 
-      <a-light type="point" color="#ffdcb2" intensity="0.4" position="0 3 1.5"></a-light>
+      <!-- Audio Controller -->
+      <a-entity id="audioController" sound="src: #calmAudio; loop: true; volume: 0.5"></a-entity>
 
-
-      
-
-
+      <!-- Assets -->
+      <a-assets>
+        <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
+        <img id="woodFloor" src="assets/wood_floor.jpg">
+        <img id="logo" src="assets/bravesoles_logo.png">
+        <img id="ophelia" src="assets/Ophelia_Caramel_TopView.jpg">
+        <audio id="calmAudio" src="assets/calm_ambient.mp3" preload="auto"></audio>
+      </a-assets>
     </a-scene>
 
     <script src="script.js"></script>    
