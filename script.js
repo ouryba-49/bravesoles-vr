@@ -46,16 +46,17 @@ AFRAME.registerComponent('show-ophelia-info', {
   }
 });
 
-// Ensure ambient audio plays after user clicks post scene load
-AFRAME.scenes[0].addEventListener('loaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById('overlay');
+  const startBtn = document.getElementById('startBtn');
   const audioEntity = document.querySelector('#audioController');
 
-  function tryPlayAudio() {
-    if (audioEntity && audioEntity.components.sound && !audioEntity.components.sound.isPlaying) {
+  startBtn.addEventListener('click', () => {
+    if (audioEntity && audioEntity.components.sound) {
       audioEntity.components.sound.playSound();
-      document.body.removeEventListener('click', tryPlayAudio);
     }
-  }
-
-  document.body.addEventListener('click', tryPlayAudio);
+    overlay.style.display = 'none';
+  });
 });
+
+
