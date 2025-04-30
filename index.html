@@ -7,6 +7,14 @@
   </head>
   <body>
     <a-scene>
+       <!-- Assets -->
+      <a-assets>
+        <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
+        <img id="stoneFloor" src="assets/black-stones-tiled-floor.jpg">
+        <img id="woodFloor" src="assets/wood_floor.jpg">
+        <img id="logo" src="assets/bravesoles_logo.png">
+        <img id="ophelia" src="assets/Ophelia_Caramel_TopView.jpg">
+      </a-assets>
 
       <!-- Camera -->
       <a-entity 
@@ -22,14 +30,16 @@
       <a-light type="directional" color="#ffffff" intensity="0.3" position="2 4 2"></a-light>
       <a-light type="point" color="#ffc58f" intensity="0.2" position="0 3 -2"></a-light>
 
-      <!-- Wood Ground -->
+      <!-- stone Ground -->
       <a-plane 
         rotation="-90 0 0" 
         width="10" 
         height="10" 
-        src="#woodFloor" 
-        repeat="4 4">
+        src="#stoneFloor" 
+        repeat="4 4"
+        material="roughness: 0.8; metalness: 0.2;">
       </a-plane>
+    
 
       <!-- Back Wall with Logo -->
       <a-plane 
@@ -122,14 +132,6 @@
           wrap-count="30">
         </a-text>
       </a-entity>
-
-      <!-- Assets -->
-      <a-assets>
-        <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
-        <img id="woodFloor" src="assets/wood_floor.jpg">
-        <img id="logo" src="assets/bravesoles_logo.png">
-        <img id="ophelia" src="assets/Ophelia_Caramel_TopView.jpg">
-      </a-assets>
 
     </a-scene>
 
