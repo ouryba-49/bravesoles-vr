@@ -9,57 +9,61 @@
     <a-scene>
       <!-- Camera -->
       <a-entity 
-      camera 
-      look-controls 
-      position="0 1.6 0" 
-      cursor="fuse: false; rayOrigin: mouse" 
-      raycaster="objects: .clickable">
-    </a-entity>
-    
+        camera 
+        look-controls 
+        position="0 1.6 0" 
+        cursor="fuse: false; rayOrigin: mouse" 
+        raycaster="objects: .clickable">
+      </a-entity>
 
       <!-- Lighting -->
       <a-sky color="#f5f3e7"></a-sky>
       <a-light type="directional" position="-1 2 1" intensity="1.2" color="#fff9e6"></a-light>
       <a-light type="ambient" color="#d2c8b0" intensity="0.5"></a-light>
-    
+
       <!-- Ground -->
       <a-plane rotation="-90 0 0" width="10" height="10" color="#e0d9cb"></a-plane>
-    
-      <!-- Shoe -->
+
+      <!-- 3D Sandal Model -->
       <a-entity 
-      id="shoeModel" 
-      gltf-model="assets/sandal_shoes.glb" 
-      position="0 0.2 -3" 
-      scale="2 2 2" 
-      rotation="0 90 0"
-      show-info
-      class="clickable">
-    </a-entity>
-    
-    
-      <!-- Info Panel (moved inside the scene) -->
+        id="shoeModel" 
+        gltf-model="#sandalModel" 
+        position="0 0.2 -3" 
+        scale="2 2 2" 
+        rotation="0 90 0"
+        show-info
+        class="clickable">
+      </a-entity>
+
+      <!-- Ophelia Sandal Image (as product card) -->
+      <a-image 
+        src="assets/Ophelia_Caramel_TopView.jpg" 
+        position="2 1.5 -3" 
+        width="1.2" 
+        height="0.9" 
+        class="clickable"
+        show-ophelia-info>
+      </a-image>
+
+      <!-- Info Panel: 3D Sandal -->
       <a-entity id="infoPanel" visible="false" position="0 2 -2">
         <a-plane color="#333" width="2" height="1" opacity="0.9"></a-plane>
-      
-        <a-text value="Handcrafted from recycled tires.\nMade by artisans in the Dominican Republic." 
-                color="#fff" 
-                position="0 0 0.01" 
-                align="center" 
-                width="1.8"
-                wrap-count="30">
+        <a-text 
+          value="Handcrafted from recycled tires.\nMade by artisans in the Dominican Republic." 
+          color="#fff" 
+          position="0 0 0.01" 
+          align="center" 
+          width="1.8"
+          wrap-count="30">
         </a-text>
-      
-        <!-- Close Button -->
         <a-plane id="closeBtn" 
-        position="0 -0.35 0.02" 
-        width="0.4" 
-        height="0.15" 
-        color="#AA3333" 
-        class="clickable"
-        close-info>
+                 position="0 -0.35 0.02" 
+                 width="0.4" 
+                 height="0.15" 
+                 color="#AA3333" 
+                 class="clickable"
+                 close-info>
         </a-plane>
-
-      
         <a-text value="Close" 
                 position="0 -0.35 0.03" 
                 align="center" 
@@ -67,9 +71,43 @@
                 width="1">
         </a-text>
       </a-entity>
+
+      <!-- Info Panel: Ophelia Sandal -->
+      <a-entity id="opheliaPanel" visible="false" position="2 2 -2">
+        <a-plane color="#3a2f23" width="2" height="1.2" opacity="0.95"></a-plane>
+        <a-text 
+          value="The Ophelia Sandal\nCrafted from reclaimed aircraft leather\nand grounded on upcycled tire soles." 
+          color="#fff" 
+          position="0 0 0.01" 
+          align="center" 
+          width="1.8"
+          wrap-count="30">
+        </a-text>
+      </a-entity>
+
+      <!-- Assets -->
+      <a-assets>
+        <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
+      </a-assets>
+
+      <a-assets>
+        <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
+        <img id="woodTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
+      </a-assets>
+      <a-plane rotation="-90 0 0" width="10" height="10" src="#woodTexture" repeat="4 4"></a-plane>
+      <img id="logo" src="assets/bravesoles_logo.png">
+      <a-image 
+        src="#logo" 
+        position="0 3 -4" 
+        width="2" 
+        height="0.75">
+      </a-image>
+
       
+
+
     </a-scene>
+
     <script src="script.js"></script>    
   </body>
 </html>
-

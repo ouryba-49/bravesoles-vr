@@ -21,8 +21,7 @@ function updateSceneFromPrompt(prompt) {
 AFRAME.registerComponent('show-info', {
   init: function () {
     this.el.addEventListener('click', function () {
-      const panel = document.querySelector('#infoPanel');
-      panel.setAttribute('visible', true);
+      document.querySelector('#infoPanel').setAttribute('visible', true);
     });
   }
 });
@@ -30,8 +29,16 @@ AFRAME.registerComponent('show-info', {
 AFRAME.registerComponent('close-info', {
   init: function () {
     this.el.addEventListener('click', function () {
-      const panel = document.querySelector('#infoPanel');
-      panel.setAttribute('visible', false);
+      document.querySelector('#infoPanel').setAttribute('visible', false);
+      document.querySelector('#opheliaPanel').setAttribute('visible', false);
+    });
+  }
+});
+
+AFRAME.registerComponent('show-ophelia-info', {
+  init: function () {
+    this.el.addEventListener('click', function () {
+      document.querySelector('#opheliaPanel').setAttribute('visible', true);
     });
   }
 });
