@@ -2,102 +2,80 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Brave Soles VR Store</title>
+    <title>Brave Soles VR Showroom</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   </head>
   <body>
     <a-scene>
-       <!-- Assets -->
+
+      <!-- ASSETS -->
       <a-assets>
         <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
-        <img id="stoneFloor" src="assets/black-stones-tiled-floor.jpg">
         <img id="woodFloor" src="assets/wood_floor.jpg">
         <img id="logo" src="assets/bravesoles_logo.png">
-        <img id="ophelia" src="assets/Ophelia_Caramel_TopView.jpg">
       </a-assets>
-
-      <!-- Camera -->
       <a-entity 
         camera 
         look-controls 
         position="0 1.6 0" 
-        cursor="fuse: false; rayOrigin: mouse" 
+        cursor="rayOrigin: mouse" 
         raycaster="objects: .clickable">
       </a-entity>
+      <a-circle 
+        position="0 0.01 -3" 
+        radius="0.8" 
+        color="#000" 
+        opacity="0.08" 
+        rotation="-90 0 0">
+      </a-circle>
 
-      <!-- Lighting -->
-      <a-light type="ambient" color="#e6ddcc" intensity="0.5"></a-light>
-      <a-light type="directional" color="#ffffff" intensity="0.3" position="2 4 2"></a-light>
-      <a-light type="point" color="#ffc58f" intensity="0.2" position="0 3 -2"></a-light>
 
-      <!-- stone Ground -->
+
+      <!-- SKY / ENVIRONMENT -->
+      <a-sky id="sky" color="#ffedd5"></a-sky>
+
+      <!-- LIGHTING -->
+      <a-light type="ambient" color="#fff5e1" intensity="0.6"></a-light>
+      <a-light type="directional" color="#ffddb3" intensity="0.4" position="2 4 1"></a-light>
+
+      <!-- FLOOR -->
       <a-plane 
         rotation="-90 0 0" 
         width="10" 
         height="10" 
-        src="#stoneFloor" 
-        repeat="4 4"
-        material="roughness: 0.8; metalness: 0.2;">
-      </a-plane>
-    
-
-      <!-- Back Wall with Logo -->
-      <a-plane 
-        position="0 2.5 -4.01" 
-        width="6" 
-        height="3.5" 
         src="#woodFloor" 
-        material="repeat: 2 2">
+        repeat="4 4"
+        material="roughness: 0.7; metalness: 0.1">
       </a-plane>
 
-      <!-- Logo -->
+      <a-sound src="url(assets/calm_ambient.mp3)" autoplay="true" loop="true" volume="0.3"></a-sound>
+
+
+      <!-- LOGO -->
       <a-image 
         src="#logo" 
         position="0 3 -4" 
         width="2.5" 
-        height="1">
+        height="1.2">
       </a-image>
 
-      <!-- Mission Statement -->
-      <a-text 
-        value="Circular fashion from upcycled tires & reclaimed leather" 
-        position="0 2.3 -3.9" 
-        color="#3a2f23" 
-        align="center" 
-        width="4"
-        wrap-count="40">
-      </a-text>
-
-      <!-- 3D Sandal Model (right side) -->
+      <!-- PRODUCT DISPLAY -->
       <a-entity 
         id="shoeModel" 
         gltf-model="#sandalModel" 
-        position="1.8 0.2 -3" 
+        position="0 0.9 -3" 
         scale="2 2 2" 
         rotation="0 90 0"
+        class="clickable"
         show-info
-        class="clickable">
+        animation="property: rotation; to: 0 450 0; dur: 15000; easing: linear; loop: true">
       </a-entity>
 
-      <!-- Ophelia Sandal Image (left side) -->
-      <a-image 
-        src="#ophelia" 
-        position="-2 1.5 -3" 
-        width="1.2" 
-        height="0.9" 
-        class="clickable"
-        show-ophelia-info>
-      </a-image>
-
-      <!-- Subtle Glow Circles -->
-      <a-circle position="1.8 0.01 -3" radius="1" color="#000" opacity="0.08" rotation="-90 0 0"></a-circle>
-      <a-circle position="-2 0.01 -3" radius="1" color="#000" opacity="0.08" rotation="-90 0 0"></a-circle>
-
-      <!-- Info Panel: 3D Sandal -->
-      <a-entity id="infoPanel" visible="false" position="1.8 2 -2.5">
-        <a-plane color="#333" width="2" height="1" opacity="0.9"></a-plane>
+      <!-- INFO PANEL -->
+      <a-entity id="infoPanel" visible="false" position="0 2 -2.5">
+        <a-plane color="#3a2f23" width="2.2" height="1.2" opacity="0.92"></a-plane>
         <a-text 
-          value="Handcrafted from recycled tires.\nMade by artisans in the Dominican Republic." 
+          value="Crafted from 100% recycled tires.\nHandmade by artisans.\nBrave Soles represents sustainable fashion with soul." 
           color="#fff" 
           position="0 0 0.01" 
           align="center" 
@@ -105,7 +83,7 @@
           wrap-count="30">
         </a-text>
         <a-plane id="closeBtn" 
-                 position="0 -0.35 0.02" 
+                 position="0 -0.4 0.02" 
                  width="0.4" 
                  height="0.15" 
                  color="#AA3333" 
@@ -113,28 +91,53 @@
                  close-info>
         </a-plane>
         <a-text value="Close" 
-                position="0 -0.35 0.03" 
+                position="0 -0.4 0.03" 
                 align="center" 
                 color="#fff" 
                 width="1">
         </a-text>
       </a-entity>
 
-      <!-- Info Panel: Ophelia Sandal -->
-      <a-entity id="opheliaPanel" visible="false" position="-2 2 -2.5">
-        <a-plane color="#3a2f23" width="2" height="1.2" opacity="0.95"></a-plane>
-        <a-text 
-          value="The Ophelia Sandal\nCrafted from reclaimed aircraft leather\nand grounded on upcycled tire soles." 
-          color="#fff" 
-          position="0 0 0.01" 
-          align="center" 
-          width="1.8"
-          wrap-count="30">
-        </a-text>
-      </a-entity>
+      <!-- PROMPT INPUT (HTML) -->
+      <div style="position: absolute; top: 20px; left: 20px; z-index: 999;">
+        <input type="text" id="promptInput" placeholder="Type 'earthy' or 'eco'" style="padding: 8px; font-size: 1em;">
+        <button onclick="submitPrompt()" style="padding: 8px;">Go</button>
+      </div>
 
     </a-scene>
 
-    <script src="script.js"></script>    
+    <!-- SCRIPT -->
+    <script>
+      function submitPrompt() {
+        const prompt = document.getElementById('promptInput').value.toLowerCase();
+
+        if (prompt.includes("earthy") || prompt.includes("eco")) {
+          document.querySelector('#sky').setAttribute('color', '#d9e4cc');
+          document.querySelector('a-plane').setAttribute('src', '#woodFloor');
+          document.querySelector('a-light[type="ambient"]').setAttribute('color', '#e9f5e1');
+        } else {
+          document.querySelector('#sky').setAttribute('color', '#ffedd5');
+          document.querySelector('a-light[type="ambient"]').setAttribute('color', '#fff5e1');
+        }
+      }
+
+      // Show info popup
+      AFRAME.registerComponent('show-info', {
+        init: function () {
+          this.el.addEventListener('click', function () {
+            document.querySelector('#infoPanel').setAttribute('visible', true);
+          });
+        }
+      });
+
+      // Close popup
+      AFRAME.registerComponent('close-info', {
+        init: function () {
+          this.el.addEventListener('click', function () {
+            document.querySelector('#infoPanel').setAttribute('visible', false);
+          });
+        }
+      });
+    </script>
   </body>
 </html>
