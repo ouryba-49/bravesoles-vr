@@ -92,9 +92,16 @@
 
       <a-assets>
         <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
-        <img id="woodTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
+        <img id="woodFloor" src="assets/wood_floor.jpg">
       </a-assets>
-      <a-plane rotation="-90 0 0" width="10" height="10" src="#woodTexture" repeat="4 4"></a-plane>
+      <a-plane 
+        rotation="-90 0 0" 
+        width="10" 
+        height="10" 
+        src="#woodFloor" 
+        repeat="4 4">
+      </a-plane>
+
       <img id="logo" src="assets/bravesoles_logo.png">
       <a-image 
         src="#logo" 
