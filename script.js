@@ -1,6 +1,7 @@
+// Optional prompt-based styling (keep if you're using prompt input)
 function submitPrompt() {
-  const prompt = document.getElementById('promptInput').value;
-  updateSceneFromPrompt(prompt);
+  const prompt = document.getElementById('promptInput')?.value;
+  if (prompt) updateSceneFromPrompt(prompt);
 }
 
 function updateSceneFromPrompt(prompt) {
@@ -17,7 +18,7 @@ function updateSceneFromPrompt(prompt) {
   }
 }
 
-// This stays as regular JS too — no <script> tags
+// Show info panel when clicking on 3D sandal
 AFRAME.registerComponent('show-info', {
   init: function () {
     this.el.addEventListener('click', function () {
@@ -26,6 +27,7 @@ AFRAME.registerComponent('show-info', {
   }
 });
 
+// Hide both info panels
 AFRAME.registerComponent('close-info', {
   init: function () {
     this.el.addEventListener('click', function () {
@@ -35,6 +37,7 @@ AFRAME.registerComponent('close-info', {
   }
 });
 
+// Show Ophelia panel when image clicked
 AFRAME.registerComponent('show-ophelia-info', {
   init: function () {
     this.el.addEventListener('click', function () {
@@ -43,10 +46,16 @@ AFRAME.registerComponent('show-ophelia-info', {
   }
 });
 
-document.body.addEventListener('click', () => {
+// Ensure ambient audio plays after user clicks post scene load
+AFRAME.scenes[0].addEventListener('loaded', () => {
   const audioEntity = document.querySelector('#audioController');
-  if (audioEntity && audioEntity.components.sound && !audioEntity.components.sound.isPlaying) {
-    audioEntity.components.sound.playSound();
-  }
-});
 
+  function tryPlayAudio() {
+    if (audioEntity && audioEntity.components.sound && !audioEntity.components.sound.isPlaying) {
+      audioEntity.components.sound.playSound();
+      document.body.removeEventListener('click', tryPlayAudio);
+    }
+  }
+
+  document.body.addEventListener('click', tryPlayAudio);
+});
