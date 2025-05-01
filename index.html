@@ -6,6 +6,17 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   </head>
   <body>
+    <!-- FADE OVERLAY FOR TELEPORT -->
+    <div id="fadeOverlay" style="
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: black;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 998;
+      transition: opacity 0.5s;">
+    </div>
     <!-- INTRO CANVAS -->
     <div id="introCanvas" style="position: absolute; top: 0; left: 0;
       width: 100vw; height: 100vh; background: rgba(0,0,0,0.85);
@@ -44,17 +55,11 @@
 
         <!-- INFO PANEL -->
         <a-entity id="infoPanel" visible="false" position="0 0.5 -3">
-        <a-plane color="#3a2f23" width="2.2" height="1.2" opacity="0.92"></a-plane>
-        <a-text 
-        value="Crafted from 100% recycled tires.\nHandmade by artisans.\nBrave Soles represents sustainable fashion with soul." 
-        color="#fff" 
-        position="0 0 0.01" 
-        align="center" 
-        width="1.8" 
-        wrap-count="30">
-        </a-text>
-        <a-plane id="closeBtn" position="0 -0.4 0.02" width="0.4" height="0.15" color="#AA3333" class="clickable" close-info></a-plane>
-        <a-text value="Close" position="0 -0.4 0.03" align="center" color="#fff" width="1"></a-text>
+          <a-plane color="#3a2f23" width="2.2" height="1.2" opacity="0.92"></a-plane>
+          <a-text value="Crafted from 100% recycled tires.\nHandmade by artisans.\nBrave Soles represents sustainable fashion with soul."
+                  color="#fff" position="0 0 0.01" align="center" width="1.8" wrap-count="30"></a-text>
+          <a-plane id="closeBtn" position="0 -0.4 0.02" width="0.4" height="0.15" color="#AA3333" class="clickable" close-info></a-plane>
+          <a-text value="Close" position="0 -0.4 0.03" align="center" color="#fff" width="1"></a-text>
         </a-entity>
 
         <!-- BRAND PANEL -->
@@ -68,77 +73,47 @@
         align="center" 
         wrap-count="60">
         </a-text>
-        <a-plane id="closeBrandBtn" 
+       <!-- CLOSE BUTTON PLANE -->
+        <a-plane 
+          id="closeBrandBtn" 
           position="0 -0.9 0.02" 
-          width="0.5" 
-          height="0.15" 
+          width="0.6" height="0.2" 
           color="#AA3333" 
           class="clickable" 
           close-brand-info>
         </a-plane>
-        <a-text value="Close" position="0 -0.9 0.03" align="center" color="#fff" width="1"></a-text>
+
+        <!-- CLOSE BUTTON TEXT (moved slightly forward in Z to avoid raycast collision) -->
+        <a-text 
+          value="Close" 
+          position="0 -0.9 0.04" 
+          align="center" 
+          color="#fff" 
+          width="1">
+        </a-text>     
+
         </a-entity>
 
         <!-- LINDA PANEL -->
         <a-entity id="lindaPanel" visible="false" position="0 0 -3">
-        <a-plane color="#3a2f23" width="2.8" height="2.2" opacity="0.95"></a-plane>
-        <a-text 
-        value="The Linda Leather Slide Sandal\n\n$85.00 — Ships in 1-3 days\n\nHandcrafted with ethically sourced leather & upcycled tire soles.\nInstant comfort, cushy EVA midsole, leather footbed.\nPerfect for day or night. Not for wide feet.\n\n'Simple. Elegant. Beautiful.'" 
-        color="#fff" 
-        position="0 0.3 0.01" 
-        align="center" 
-        width="2.4" 
-        wrap-count="40">
-        </a-text>
-        <a-plane id="closeLindaBtn" 
-          position="0 -0.8 0.02" 
-          width="0.5" 
-          height="0.2" 
-          color="#AA3333" 
-          class="clickable" 
-          close-linda>
-        </a-plane>
-        <a-text value="Close" position="0 -0.8 0.03" align="center" color="#fff" width="1"></a-text>
-        <a-plane 
-        position="0 -1.1 0.02" 
-        width="0.8" 
-        height="0.25" 
-        color="#3a9ecb" 
-        class="clickable"
-        link="href: https://bravesoles.life/products/the-linda-leather-slide-sandal; target: _blank">
-        </a-plane>
-        <a-text value="Buy Now" position="0 -1.1 0.03" align="center" color="#fff" width="1.2"></a-text>
+          <a-plane color="#3a2f23" width="2.8" height="2.2" opacity="0.95"></a-plane>
+          <a-text value="The Linda Leather Slide Sandal\n\n$85.00 — Ships in 1-3 days..." color="#fff" position="0 0.3 0.01" align="center" width="2.4" wrap-count="40"></a-text>
+          <a-plane id="closeLindaBtn" position="0 -0.8 0.02" width="0.5" height="0.2" color="#AA3333" class="clickable" close-linda></a-plane>
+          <a-text value="Close" position="0 -0.8 0.03" align="center" color="#fff" width="1"></a-text>
+          <a-plane position="0 -1.1 0.02" width="0.8" height="0.25" color="#3a9ecb" class="clickable"
+                   link="href: https://bravesoles.life/products/the-linda-leather-slide-sandal; target: _blank"></a-plane>
+          <a-text value="Buy Now" position="0 -1.1 0.03" align="center" color="#fff" width="1.2"></a-text>
         </a-entity>
 
         <!-- PADRE PANEL -->
         <a-entity id="padrePanel" visible="false" position="0 0 -3">
-        <a-plane color="#3a2f23" width="2.8" height="2.8" opacity="0.95"></a-plane>
-        <a-text 
-        value="The Padre Men's Leather Flip Flop\n\n$115.00 — Ships in 1-3 days\n\nClassic men's flip-flops crafted with locally sourced leather and upcycled tire soles.\nComfortable cushioning, raised heel for shock absorption.\nArtisan handmade in the Dominican Republic.\n\n'Strong. Comfortable. Adventurous.'" 
-        color="#fff" 
-        position="0 0.4 0.01" 
-        align="center" 
-        width="2.4" 
-        wrap-count="40">
-        </a-text>
-        <a-plane id="closePadreBtn" 
-          position="0 -0.9 0.02" 
-          width="0.5" 
-          height="0.2" 
-          color="#AA3333" 
-          class="clickable" 
-          close-padre>
-        </a-plane>
-        <a-text value="Close" position="0 -0.9 0.03" align="center" color="#fff" width="1"></a-text>
-        <a-plane 
-        position="0 -1.25 0.02" 
-        width="0.8" 
-        height="0.25" 
-        color="#3a9ecb" 
-        class="clickable"
-        link="href: https://bravesoles.life/products/the-padre-mens-leather-flip-flop; target: _blank">
-        </a-plane>
-        <a-text value="Buy Now" position="0 -1.25 0.03" align="center" color="#fff" width="1.2"></a-text>
+          <a-plane color="#3a2f23" width="2.8" height="2.8" opacity="0.95"></a-plane>
+          <a-text value="The Padre Men's Leather Flip Flop\n\n$115.00 — Ships in 1-3 days..." color="#fff" position="0 0.4 0.01" align="center" width="2.4" wrap-count="40"></a-text>
+          <a-plane id="closePadreBtn" position="0 -0.9 0.02" width="0.5" height="0.2" color="#AA3333" class="clickable" close-padre></a-plane>
+          <a-text value="Close" position="0 -0.9 0.03" align="center" color="#fff" width="1"></a-text>
+          <a-plane position="0 -1.25 0.02" width="0.8" height="0.25" color="#3a9ecb" class="clickable"
+                   link="href: https://bravesoles.life/products/the-padre-mens-leather-flip-flop; target: _blank"></a-plane>
+          <a-text value="Buy Now" position="0 -1.25 0.03" align="center" color="#fff" width="1.2"></a-text>
         </a-entity>
 
       </a-entity>
@@ -247,10 +222,23 @@
           camera.setAttribute('sound', 'src: #ambientAudio; autoplay: true; loop: true; volume: 0.4');
         });
       }
-
+      function teleportWithFade(x, y, z) {
+        const overlay = document.getElementById('fadeOverlay');
+        overlay.style.opacity = 1;
+        setTimeout(() => {
+          document.querySelector('#mainCamera').setAttribute('position', { x, y, z });
+          overlay.style.opacity = 0;
+        }, 400);
+      }
+      function hideAllPanels() {
+        ['infoPanel', 'brandPanel', 'lindaPanel', 'padrePanel'].forEach(id => {
+          document.querySelector(`#${id}`).setAttribute('visible', false);
+        });
+      }
       AFRAME.registerComponent('show-info', {
         init: function () {
-          this.el.addEventListener('click', function () {
+          this.el.addEventListener('click', () => {
+            hideAllPanels();
             document.querySelector('#infoPanel').setAttribute('visible', true);
           });
         }
@@ -258,7 +246,7 @@
 
       AFRAME.registerComponent('close-info', {
         init: function () {
-          this.el.addEventListener('click', function () {
+          this.el.addEventListener('click', () => {
             document.querySelector('#infoPanel').setAttribute('visible', false);
           });
         }
@@ -266,7 +254,8 @@
 
       AFRAME.registerComponent('show-brand-info', {
         init: function () {
-          this.el.addEventListener('click', function () {
+          this.el.addEventListener('click', () => {
+            hideAllPanels();
             document.querySelector('#brandPanel').setAttribute('visible', true);
           });
         }
@@ -274,7 +263,7 @@
 
       AFRAME.registerComponent('close-brand-info', {
         init: function () {
-          this.el.addEventListener('click', function () {
+          this.el.addEventListener('click', () => {
             document.querySelector('#brandPanel').setAttribute('visible', false);
           });
         }
@@ -282,7 +271,8 @@
 
       AFRAME.registerComponent('show-linda', {
         init: function () {
-          this.el.addEventListener('click', function () {
+          this.el.addEventListener('click', () => {
+            hideAllPanels();
             document.querySelector('#lindaPanel').setAttribute('visible', true);
           });
         }
@@ -290,66 +280,16 @@
 
       AFRAME.registerComponent('close-linda', {
         init: function () {
-          this.el.addEventListener('click', function () {
+          this.el.addEventListener('click', () => {
             document.querySelector('#lindaPanel').setAttribute('visible', false);
           });
         }
       });
 
-      AFRAME.registerComponent('teleport-to-linda', {
-        init: function () {
-          this.el.addEventListener('click', function () {
-            document.querySelector('[camera]').setAttribute('position', { x: 2, y: 1.6, z: -2 });
-          });
-        }
-      });
-
-      AFRAME.registerComponent('teleport-to-center', {
-        init: function () {
-          this.el.addEventListener('click', function () {
-            document.querySelector('[camera]').setAttribute('position', { x: 0, y: 1.6, z: 0 });
-          });
-        }
-      });
-
-      AFRAME.registerComponent('teleport-to-sandal', {
-        init: function () {
-          this.el.addEventListener('click', function (evt) {
-            evt.stopPropagation();  // 👈 Prevent click from affecting anything else
-            const cam = document.querySelector('[camera]');
-            cam.setAttribute('position', { x: 0.5, y: 1.6, z: -2.5 });  // adjust as needed
-          });
-        }
-      });
-
-
-
-      AFRAME.registerComponent('teleport-front', {
-        init: function () {
-          this.el.addEventListener('click', function () {
-            document.querySelector('[camera]').setAttribute('position', { x: 0, y: 1.6, z: 3.5 });
-          });
-        }
-      });
-
-      AFRAME.registerComponent('teleport-left', {
-        init: function () {
-          this.el.addEventListener('click', function () {
-            document.querySelector('[camera]').setAttribute('position', { x: -3.5, y: 1.6, z: 0 });
-          });
-        }
-      });
-
-      AFRAME.registerComponent('teleport-right', {
-        init: function () {
-          this.el.addEventListener('click', function () {
-            document.querySelector('[camera]').setAttribute('position', { x: 3.5, y: 1.6, z: 0 });
-          });
-        }
-      });
       AFRAME.registerComponent('show-padre', {
         init: function () {
-          this.el.addEventListener('click', function () {
+          this.el.addEventListener('click', () => {
+            hideAllPanels();
             document.querySelector('#padrePanel').setAttribute('visible', true);
           });
         }
@@ -357,23 +297,53 @@
 
       AFRAME.registerComponent('close-padre', {
         init: function () {
-          this.el.addEventListener('click', function () {
+          this.el.addEventListener('click', () => {
             document.querySelector('#padrePanel').setAttribute('visible', false);
           });
         }
       });
-     AFRAME.registerComponent('teleport-to-padre', {
+
+      AFRAME.registerComponent('teleport-to-linda', {
         init: function () {
-          this.el.addEventListener('click', function () {
-            document.querySelector('[camera]').setAttribute('position', { x: -2, y: 1.6, z: -2.3 });
-          });
+          this.el.addEventListener('click', () => teleportWithFade(2, 1.6, -2));
         }
       });
 
+      AFRAME.registerComponent('teleport-to-sandal', {
+        init: function () {
+          this.el.addEventListener('click', () => teleportWithFade(0.5, 1.6, -2.5));
+        }
+      });
 
+      AFRAME.registerComponent('teleport-to-padre', {
+        init: function () {
+          this.el.addEventListener('click', () => teleportWithFade(-2, 1.6, -2.3));
+        }
+      });
 
+      AFRAME.registerComponent('teleport-to-center', {
+        init: function () {
+          this.el.addEventListener('click', () => teleportWithFade(0, 1.6, 0));
+        }
+      });
 
-    </script>
-  </body>
+      AFRAME.registerComponent('teleport-front', {
+        init: function () {
+          this.el.addEventListener('click', () => teleportWithFade(0, 1.6, 3.5));
+        }
+      });
+
+      AFRAME.registerComponent('teleport-left', {
+        init: function () {
+          this.el.addEventListener('click', () => teleportWithFade(-3.5, 1.6, 0));
+        }
+      });
+
+      AFRAME.registerComponent('teleport-right', {
+        init: function () {
+          this.el.addEventListener('click', () => teleportWithFade(3.5, 1.6, 0));
+        }
+      });
+</script>
+</body>
 </html>
-
