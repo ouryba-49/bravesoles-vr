@@ -124,29 +124,45 @@
 
       <a-image 
         src="#padreFlipflop" 
-        position="-2 1.5 -2" 
+        position="-2 1.5 -3" 
         width="1.3" 
         height="0.9" 
         class="clickable" 
         show-padre>
       </a-image>
 
+      <a-circle 
+        position="-2 0.01 -2.3" 
+        rotation="-90 0 0" 
+        radius="0.3" 
+        color="#64c36e" 
+        opacity="0.6" 
+        class="clickable"
+        teleport-to-padre>
+      </a-circle>
+
+
 
       <!-- PRODUCT -->
-      <a-entity id="shoeModel" gltf-model="#sandalModel" position="0 1.3 -3" scale="2 2 2" rotation="0 90 0"
-                class="clickable" show-info animation="property: rotation; to: 0 450 0; dur: 15000; easing: linear; loop: true">
+      <a-entity id="shoeModel" 
+        gltf-model="#sandalModel" 
+        position="0.5 1.3 -1.5" 
+        scale="2 2 2" 
+        rotation="0 90 0"
+        class="clickable" 
+        show-info 
+        animation="property: rotation; to: 0 450 0; dur: 15000; easing: linear; loop: true">
       </a-entity>
 
+
       <a-image src="#lindaTop" position="2 1.5 -3" width="1.3" height="0.9" class="clickable" show-linda></a-image>
-      <a-circle position="0 0.01 -3" radius="0.8" color="#000" opacity="0.08" rotation="-90 0 0"></a-circle>
+     
       <a-circle position="2 0.01 -3" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6"
                 class="clickable" teleport-to-linda></a-circle>
-     <!-- Center -->
+     <!-- teleport to Center -->
       <a-circle position="0 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-to-center></a-circle>
 
-      <a-circle 
-        id="sandalTeleport" 
-        position="0 0.01 -2.2" 
+      <a-circle position="0.5 0.01 -2.5" 
         rotation="-90 0 0" 
         radius="0.3" 
         color="#64c36e" 
@@ -154,6 +170,7 @@
         class="clickable" 
         teleport-to-sandal>
       </a-circle>
+
     
       <!-- Front Wall (Entrance) -->
       <a-circle position="0 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front></a-circle>
@@ -252,12 +269,14 @@
 
       AFRAME.registerComponent('teleport-to-sandal', {
         init: function () {
-          this.el.addEventListener('click', function () {
+          this.el.addEventListener('click', function (evt) {
+            evt.stopPropagation();  // 👈 Prevent click from affecting anything else
             const cam = document.querySelector('[camera]');
-            cam.setAttribute('position', { x: 0, y: 1.6, z: -2.2 });
+            cam.setAttribute('position', { x: 0.5, y: 1.6, z: -2.5 });  // adjust as needed
           });
         }
       });
+
 
 
       AFRAME.registerComponent('teleport-front', {
@@ -298,6 +317,14 @@
           });
         }
       });
+     AFRAME.registerComponent('teleport-to-padre', {
+        init: function () {
+          this.el.addEventListener('click', function () {
+            document.querySelector('[camera]').setAttribute('position', { x: -2, y: 1.6, z: -2.3 });
+          });
+        }
+      });
+
 
 
 
