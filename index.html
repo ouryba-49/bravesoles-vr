@@ -97,24 +97,22 @@
         <!-- LINDA PANEL -->
         <a-entity id="lindaPanel" visible="false" position="0 0 -3">
           <a-plane color="#3a2f23" width="2.8" height="2.2" opacity="0.95"></a-plane>
-          <a-text value="The Linda Leather Slide Sandal\n\n$85.00 — Ships in 1-3 days..." color="#fff" position="0 0.3 0.01" align="center" width="2.4" wrap-count="40"></a-text>
+          <a-text value="The Linda Leather Slide Sandal\n\n$85.00 — Ships in 1-3 days\n\nHandcrafted with ethically sourced leather & upcycled tire soles.\nInstant comfort, cushy EVA midsole, leather footbed.\nPerfect for day or night. Not for wide feet.\n\n'Simple. Elegant. Beautiful.'" 
+                  color="#fff" position="0 0.3 0.01" align="center" width="2.4" wrap-count="40"></a-text>
           <a-plane id="closeLindaBtn" position="0 -0.8 0.02" width="0.5" height="0.2" color="#AA3333" class="clickable" close-linda></a-plane>
           <a-text value="Close" position="0 -0.8 0.03" align="center" color="#fff" width="1"></a-text>
-          <a-plane position="0 -1.1 0.02" width="0.8" height="0.25" color="#3a9ecb" class="clickable"
-                   link="href: https://bravesoles.life/products/the-linda-leather-slide-sandal; target: _blank"></a-plane>
-          <a-text value="Buy Now" position="0 -1.1 0.03" align="center" color="#fff" width="1.2"></a-text>
         </a-entity>
+        
 
         <!-- PADRE PANEL -->
         <a-entity id="padrePanel" visible="false" position="0 0 -3">
           <a-plane color="#3a2f23" width="2.8" height="2.8" opacity="0.95"></a-plane>
-          <a-text value="The Padre Men's Leather Flip Flop\n\n$115.00 — Ships in 1-3 days..." color="#fff" position="0 0.4 0.01" align="center" width="2.4" wrap-count="40"></a-text>
+          <a-text value="The Padre Men's Leather Flip Flop\n\n$115.00 — Ships in 1-3 days\n\nClassic men's flip-flops crafted with locally sourced leather and upcycled tire soles.\nComfortable cushioning, raised heel for shock absorption.\nArtisan handmade in the Dominican Republic.\n\n'Strong. Comfortable. Adventurous.'"  
+                  color="#fff" position="0 0.4 0.01" align="center" width="2.4" wrap-count="40"></a-text>
           <a-plane id="closePadreBtn" position="0 -0.9 0.02" width="0.5" height="0.2" color="#AA3333" class="clickable" close-padre></a-plane>
           <a-text value="Close" position="0 -0.9 0.03" align="center" color="#fff" width="1"></a-text>
-          <a-plane position="0 -1.25 0.02" width="0.8" height="0.25" color="#3a9ecb" class="clickable"
-                   link="href: https://bravesoles.life/products/the-padre-mens-leather-flip-flop; target: _blank"></a-plane>
-          <a-text value="Buy Now" position="0 -1.25 0.03" align="center" color="#fff" width="1.2"></a-text>
         </a-entity>
+        
 
       </a-entity>
 
@@ -200,6 +198,16 @@
 
       <!-- Right Wall -->
       <a-circle position="3.5 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-right></a-circle>
+      <!-- Linda World -->
+      <a-entity id="lindaWorld" visible="false">
+        <!-- Environment and models go here -->
+      </a-entity>
+
+      <!-- Padre World -->
+      <a-entity id="padreWorld" visible="false">
+        <!-- Environment and models go here -->
+      </a-entity>
+
 
                     
     </a-scene>
@@ -344,6 +352,17 @@
           this.el.addEventListener('click', () => teleportWithFade(3.5, 1.6, 0));
         }
       });
+      
+      AFRAME.registerComponent('enter-linda-world', {
+        init: function () {
+          this.el.addEventListener('click', () => {
+            document.querySelector('#showroom').setAttribute('visible', false);
+            document.querySelector('#lindaWorld').setAttribute('visible', true);
+          });
+        }
+      });
+
+      
 </script>
 </body>
 </html>
