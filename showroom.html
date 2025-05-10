@@ -29,50 +29,27 @@
         <img id="jasmineWhite" src="assets/Jasmine_Wht_Ca_LS2_Web.jpg">
         <img id="padreFlipflop" src="assets/Padre_Caramel_Leather_Front.jpg">
       </a-assets>
-   
-      
-        <!-- Linda World -->
-        <a-entity id="lindaWorld" visible="false">
-          <!-- Lighting -->
-          <a-light type="ambient" color="#ffffff" intensity="1.0"></a-light>
-          <a-light type="directional" color="#ffffff" intensity="0.4" position="2 4 1"></a-light>
+      <!-- Linda Portal Ring -->
+      <a-ring id="lindaPortal"
+        position="3 1.5 -2.5"
+        rotation="0 0 0"
+        radius-inner="0.5"
+        radius-outer="0.6"
+        color="#8ce8a7"
+        opacity="0.8"
+        class="clickable"
+        enter-linda-world>
+      </a-ring>
 
-          <!-- Ground -->
-          <a-plane position="0 0 -1" rotation="-90 0 0" width="10" height="10" color="#bdf3e2"></a-plane>
-
-          <!-- Welcome Text -->
-          <a-text value="Discover our Linda Model" position="0 2.5 -3" align="center" color="#000" width="6"></a-text>
-
-          <!-- Return Door -->
-          <a-entity id="returnDoor" position="0 1 -4">
-            <a-box width="1" height="2" depth="0.1" color="#6b4f30" opacity="0.95" class="clickable" teleport-back-to-showroom></a-box>
-            <a-text value="Return to Main Room" align="center" position="0 1.4 0.1" color="#000" width="4"></a-text>
-          </a-entity>
-        </a-entity>
-
-
-   
-      
+      <!-- Linda World -->
+      <a-entity id="lindaWorld" visible="false">
+        <a-plane position="0 0 -1" rotation="-90 0 0" width="10" height="10" color="#bdf3e2"></a-plane>
+        <a-text value="Welcome to Linda World" position="0 2 -3" align="center" color="#000" width="6"></a-text>
+        <a-circle position="0 0.01 0" rotation="-90 0 0" radius="0.4" color="#64c36e" class="clickable" teleport-back-to-showroom></a-circle>
+      </a-entity>
 
       <!-- Showroom -->
       <a-entity id="showroom" visible="true">
-     <!-- Linda World Entry Trigger -->
-     <a-entity id="lindaPortal" position="3 2.5 -2.5">
-      <a-plane width="2.8" height="0.8" color="#6b4f30" opacity="0.95"
-               position="0 0 0.01"
-               class="clickable"
-               enter-linda-world
-               animation="property: material.color; dir: alternate; dur: 1500; loop: true; to: #8e6b44">
-      </a-plane>
-      <a-text value="Enter the Linda World"
-              align="center"
-              color="#fff"
-              width="4"
-              position="0 0 0.02"
-              animation="property: position; dir: alternate; dur: 1500; easing: easeInOutSine; loop: true; to: 0 0.1 0.02">
-      </a-text>
-    </a-entity>
-    
         <!-- CAMERA + PANELS -->
         <a-entity id="mainCamera"
           camera 
@@ -173,11 +150,6 @@
               <a-circle position="0 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front></a-circle>
               <a-circle position="-3.5 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-left></a-circle>
               <a-circle position="3.5 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-right></a-circle>
-             
-              <a-circle position="-3.5 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front-left></a-circle>
-
-
-              <a-circle position="3.5 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front-right></a-circle>
       
             </a-entity> <!-- End showroom -->
       
@@ -349,21 +321,8 @@
                 this.el.addEventListener('click', () => teleportWithFade(3.5, 1.6, 0));
               }
             });
-            AFRAME.registerComponent('teleport-front-left', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(-3.5, 1.6, 3.5));
-              }
-            });
-
-            AFRAME.registerComponent('teleport-front-right', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(3.5, 1.6, 3.5));
-              }
-            });
-
-
-    </script>
- </body>
-</html>
+          </script>
+        </body>
+      </html>
       
 
