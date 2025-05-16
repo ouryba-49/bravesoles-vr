@@ -28,6 +28,7 @@
         <img id="jasmineCaramel" src="assets/Jasmine Caramel.jpg">
         <img id="jasmineWhite" src="assets/Jasmine_Wht_Ca_LS2_Web.jpg">
         <img id="padreFlipflop" src="assets/Padre_Caramel_Leather_Front.jpg">
+        <audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
       </a-assets>
    
       
@@ -73,31 +74,61 @@
       </a-text>
     </a-entity>
     
-        <!-- CAMERA + PANELS -->
-        <a-entity id="mainCamera"
-          camera 
-          look-controls="magicWindowTrackingEnabled: false"
-          position="0 1.6 4.5"
-          cursor="rayOrigin: mouse" 
-          raycaster="objects: .clickable">
+          <!-- CAMERA + PANELS -->
+          <!-- CAMERA RIG THAT WORKS IN BOTH VR AND NON-VR -->
+          <a-entity id="rig">
+            <a-camera 
+              id="mainCamera" 
+              position="0 1.6 4.5" 
+              look-controls 
+              wasd-controls="enabled: false">
+              
+              <!-- Gaze cursor for VR -->
+              <a-cursor id="vrCursor"
+                visible="false"
+                fuse="true" 
+                fuse-timeout="1000" 
+                raycaster="objects: .clickable" 
+                material="color: black; shader: flat"
+                animation__click="property: scale; startEvents: click; from: 1 1 1; to: 1.3 1.3 1.3; dur: 150; dir: alternate"
+                sound="on: click; src: #clickSound">
+              </a-cursor>
+                   <!-- LINDA PANEL -->
+              <a-entity id="lindaPanel" visible="false" position="0 0 -3">
+                <a-plane color="#3a2f23" width="1.8" height="1.2" opacity="0.95"></a-plane>
+                <a-text value="The Linda Leather Slide Sandal.\n\n'Simple. Elegant. Beautiful.'" color="#fff" position="0 0.3 0.01" align="center" width="2.4" wrap-count="40"></a-text>
+                <a-plane id="closeLindaBtn" position="0 -0.3 0.02" width="0.5" height="0.2" color="#AA3333" class="clickable" close-linda></a-plane>
+                <a-text value="Close" position="0 -0.3 0.03" align="center" color="#fff" width="1"></a-text>
+              </a-entity>
 
-        <!-- LINDA PANEL -->
-          <a-entity id="lindaPanel" visible="false" position="0 0 -3">
-            <a-plane color="#3a2f23" width="1.8" height="1.2" opacity="0.95"></a-plane>
-            <a-text value="The Linda Leather Slide Sandal.\n\n'Simple. Elegant. Beautiful.'" color="#fff" position="0 0.3 0.01" align="center" width="2.4" wrap-count="40"></a-text>
-            <a-plane id="closeLindaBtn" position="0 -0.3 0.02" width="0.5" height="0.2" color="#AA3333" class="clickable" close-linda></a-plane>
-            <a-text value="Close" position="0 -0.3 0.03" align="center" color="#fff" width="1"></a-text>
+              <!-- PADRE PANEL -->
+              <a-entity id="padrePanel" visible="false" position="0 0 -3">
+                <a-plane color="#3a2f23" width="1.8" height="1.3" opacity="0.95"></a-plane>
+                <a-text value="The Padre Men's Leather Flip Flop\n\n'Strong. Comfortable. Adventurous.'" color="#fff" position="0 0.4 0.01" align="center" width="2.4" wrap-count="40"></a-text>
+                <a-plane id="closePadreBtn" position="0 -0.3 0.02" width="0.5" height="0.2" color="#AA3333" class="clickable" close-padre></a-plane>
+                <a-text value="Close" position="0 -0.3 0.03" align="center" color="#fff" width="1"></a-text>
+              </a-entity>
+            </a-camera>
           </a-entity>
 
-          <!-- PADRE PANEL -->
-          <a-entity id="padrePanel" visible="false" position="0 0 -3">
-            <a-plane color="#3a2f23" width="1.8" height="1.3" opacity="0.95"></a-plane>
-            <a-text value="The Padre Men's Leather Flip Flop\n\n'Strong. Comfortable. Adventurous.'" color="#fff" position="0 0.4 0.01" align="center" width="2.4" wrap-count="40"></a-text>
-            <a-plane id="closePadreBtn" position="0 -0.3 0.02" width="0.5" height="0.2" color="#AA3333" class="clickable" close-padre></a-plane>
-            <a-text value="Close" position="0 -0.3 0.03" align="center" color="#fff" width="1"></a-text>
+        <!-- VR Controller Raycasters -->
+     
+          <a-entity laser-controls="hand: left" raycaster="objects: .clickable" line="color: #64c36e" sound="on: triggerdown; src: #clickSound"></a-entity>
+          <a-entity laser-controls="hand: right" raycaster="objects: .clickable" line="color: #64c36e" sound="on: triggerdown; src: #clickSound"></a-entity>
+          <a-entity id="mouseRaycaster" 
+            raycaster="objects: .clickable" 
+            cursor="rayOrigin: mouse"
+            visible="false"
+            sound="on: click; src: #clickSound">
           </a-entity>
 
-        </a-entity> <!-- End mainCamera -->
+
+
+
+
+   
+
+      
 
         <!-- ENVIRONMENT -->
         <a-light type="ambient" color="#fff5e1" intensity="0.6"></a-light>
@@ -137,9 +168,10 @@
                 color="#64c36e" 
                 opacity="0.6" 
                 class="clickable"
-                teleport-to-padre>
-              </a-circle>
-      
+                teleport-to-padre event-set__enter="_event: mouseenter; material.opacity: 1"
+                event-set__leave="_event: mouseleave; material.opacity: 0.6"></a-circle>
+                
+            
 
       
               <!-- LINDA PRODUCT IMAGE + TELEPORT -->
@@ -147,19 +179,39 @@
                 <a-image src="#lindaTop" position="0 1.5 0.01" width="2.25" height="1.2" class="clickable" show-linda></a-image>
               </a-entity>
               <a-circle position="2 0.01 -3" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6"
-                        class="clickable" teleport-to-linda></a-circle>
+                        class="clickable" teleport-to-linda 
+                        event-set__enter="_event: mouseenter; material.opacity: 1"
+                        event-set__leave="_event: mouseleave; material.opacity: 0.6"></a-circle>
+                        
+          
       
               <!-- ADDITIONAL TELEPORT SPOTS -->
-              <a-circle position="0 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-to-center></a-circle>
-              <a-circle position="0.5 0.01 -2.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-to-sandal></a-circle>
-              <a-circle position="0 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front></a-circle>
-              <a-circle position="-3.5 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-left></a-circle>
-              <a-circle position="3.5 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-right></a-circle>
+              <a-circle position="0 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-to-center event-set__enter="_event: mouseenter; material.opacity: 1"
+                event-set__leave="_event: mouseleave; material.opacity: 0.6"></a-circle>
+              
+              <a-circle position="0.5 0.01 -2.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-to-sandal event-set__enter="_event: mouseenter; material.opacity: 1"
+                event-set__leave="_event: mouseleave; material.opacity: 0.6"></a-circle>
+              
+              <a-circle position="0 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front event-set__enter="_event: mouseenter; material.opacity: 1"
+                event-set__leave="_event: mouseleave; material.opacity: 0.6">
+                </a-circle>
+              <a-circle position="-3.5 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-left event-set__enter="_event: mouseenter; material.opacity: 1"
+                event-set__leave="_event: mouseleave; material.opacity: 0.6">
+                </a-circle>
+              <a-circle position="3.5 0.01 0" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-right event-set__enter="_event: mouseenter; material.opacity: 1"
+                event-set__leave="_event: mouseleave; material.opacity: 0.6">
+                </a-circle>
              
-              <a-circle position="-3.5 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front-left></a-circle>
+              <a-circle position="-3.5 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front-left event-set__enter="_event: mouseenter; material.opacity: 1"
+                event-set__leave="_event: mouseleave; material.opacity: 0.6">
+                </a-circle>
 
 
-              <a-circle position="3.5 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front-right></a-circle>
+              <a-circle position="3.5 0.01 3.5" rotation="-90 0 0" radius="0.3" color="#64c36e" opacity="0.6" class="clickable" teleport-front-right 
+                event-set__enter="_event: mouseenter; material.opacity: 1"
+                event-set__leave="_event: mouseleave; material.opacity: 0.6"></a-circle>
+
+
              <!-- Brand Story Panel - White Background with Thick Black Border -->
               <a-entity position="0 3 4.99" rotation="0 180 0">
                 <!-- Black Border -->
@@ -339,6 +391,23 @@
                 this.el.addEventListener('click', () => teleportWithFade(3.5, 1.6, 3.5));
               }
             });
+            AFRAME.scenes[0].addEventListener('enter-vr', () => {
+            const cursor = document.querySelector('#vrCursor');
+
+            // Give a bit of time for controllers to initialize
+            setTimeout(() => {
+              const controllers = document.querySelectorAll('[laser-controls]');
+              const hasControllers = Array.from(controllers).some(controller => controller.components && controller.components['tracked-controls']?.controllerPresent);
+
+              // Show reticle only if no controllers are connected
+              cursor.setAttribute('visible', !hasControllers);
+            }, 500);
+          });
+
+          AFRAME.scenes[0].addEventListener('exit-vr', () => {
+            document.querySelector('#vrCursor').setAttribute('visible', false);
+          });
+
 
 
     </script>
