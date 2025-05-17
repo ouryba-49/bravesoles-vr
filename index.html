@@ -269,6 +269,15 @@
                 overlay.style.opacity = 0;
               }, 400);
             }
+
+            function addTeleportEvents(el, x, y, z) {
+              const teleport = () => {
+                teleportWithFade(x, y, z);
+                document.querySelector('#clickSound').play();
+              };
+              el.addEventListener('click', teleport);
+              el.addEventListener('triggerdown', teleport);
+            }
       
             function teleportWithFadeAndSwitch(worldId) {
               const overlay = document.getElementById('fadeOverlay');
@@ -334,63 +343,65 @@
             AFRAME.registerComponent('close-padre', {
               init: function () {
                 this.el.addEventListener('click', () => {
+                  console.log("Padre close clicked"); // This should appear in console
                   document.querySelector('#padrePanel').setAttribute('visible', false);
                 });
               }
             });
       
-            AFRAME.registerComponent('teleport-to-linda', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(2, 1.6, -2));
-              }
-            });
-      
-            AFRAME.registerComponent('teleport-to-sandal', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(0.5, 1.6, -2.5));
-              }
-            });
-      
-            AFRAME.registerComponent('teleport-to-padre', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(-2, 1.6, -2.3));
-              }
-            });
-      
-            AFRAME.registerComponent('teleport-to-center', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(0, 1.6, 0));
-              }
-            });
-      
-            AFRAME.registerComponent('teleport-front', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(0, 1.6, 3.5));
-              }
-            });
-      
-            AFRAME.registerComponent('teleport-left', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(-3.5, 1.6, 0));
-              }
-            });
-      
-            AFRAME.registerComponent('teleport-right', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(3.5, 1.6, 0));
-              }
-            });
-            AFRAME.registerComponent('teleport-front-left', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(-3.5, 1.6, 3.5));
-              }
-            });
+           AFRAME.registerComponent('teleport-to-linda', {
+            init: function () {
+              addTeleportEvents(this.el, 2, 1.6, -2);
+            }
+          });
 
-            AFRAME.registerComponent('teleport-front-right', {
-              init: function () {
-                this.el.addEventListener('click', () => teleportWithFade(3.5, 1.6, 3.5));
-              }
-            });
+          AFRAME.registerComponent('teleport-to-sandal', {
+            init: function () {
+              addTeleportEvents(this.el, 0.5, 1.6, -2.5);
+            }
+          });
+
+          AFRAME.registerComponent('teleport-to-padre', {
+            init: function () {
+              addTeleportEvents(this.el, -2, 1.6, -2.3);
+            }
+          });
+
+          AFRAME.registerComponent('teleport-to-center', {
+            init: function () {
+              addTeleportEvents(this.el, 0, 1.6, 0);
+            }
+          });
+
+          AFRAME.registerComponent('teleport-front', {
+            init: function () {
+              addTeleportEvents(this.el, 0, 1.6, 3.5);
+            }
+          });
+
+          AFRAME.registerComponent('teleport-left', {
+            init: function () {
+              addTeleportEvents(this.el, -3.5, 1.6, 0);
+            }
+          });
+
+          AFRAME.registerComponent('teleport-right', {
+            init: function () {
+              addTeleportEvents(this.el, 3.5, 1.6, 0);
+            }
+          });
+
+          AFRAME.registerComponent('teleport-front-left', {
+            init: function () {
+              addTeleportEvents(this.el, -3.5, 1.6, 3.5);
+            }
+          });
+
+          AFRAME.registerComponent('teleport-front-right', {
+            init: function () {
+              addTeleportEvents(this.el, 3.5, 1.6, 3.5);
+            }
+          });
             AFRAME.scenes[0].addEventListener('enter-vr', () => {
             const cursor = document.querySelector('#vrCursor');
 
