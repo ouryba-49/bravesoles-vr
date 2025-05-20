@@ -31,6 +31,13 @@
         <img id="jasmineWhite" src="assets/Jasmine_Wht_Ca_LS2_Web.jpg">
         <img id="padreFlipflop" src="assets/Padre_Caramel_Leather_Front.jpg">
         <audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
+        <img id="cloudTexture" src="clouds.png">
+        <a-asset-item id="tireModel" src="assets/tire.glb"></a-asset-item>
+        <a-asset-item id="palmTreeModel" src="assets/palm_tree.glb"></a-asset-item>
+        <img id="leatherTexture" src="assets/leather.jpg">
+
+
+
       </a-assets>
           <!-- STORY MENU -->
           <a-entity id="storyMenu" position="0 1.6 -2" visible="false" scale="1.5 1.5 1">
@@ -61,24 +68,59 @@
       </a-entity>
     
       
-        <!-- Linda World -->
+        <!-- LINDA WORLD -->
         <a-entity id="lindaWorld" visible="false">
+          <!-- Sky and Cloud Plane -->
+          <a-sky color="#add8e6"></a-sky>
+          <a-entity position="0 5 -10" animation="property: position; to: 0 5 10; loop: true; dur: 30000; easing: linear">
+            <a-plane src="#cloudTexture" width="20" height="10" material="transparent: true; opacity: 0.5"></a-plane>
+          </a-entity>
+        
           <!-- Lighting -->
-          <a-light type="ambient" color="#ffffff" intensity="1.0"></a-light>
-          <a-light type="directional" color="#ffffff" intensity="0.4" position="2 4 1"></a-light>
-
+          <a-light type="ambient" color="#ffeecc" intensity="0.8"></a-light>
+          <a-light type="directional" color="#ffddb3" intensity="0.6" position="2 4 1"></a-light>
+        
           <!-- Ground -->
-          <a-plane position="0 0 -1" rotation="-90 0 0" width="10" height="10" color="#bdf3e2"></a-plane>
-
-          <!-- Welcome Text -->
-          <a-text value="Discover Linda" position="0 2.5 -3" align="center" color="#000" width="6"></a-text>
-
+          <a-plane position="0 0 -1" rotation="-90 0 0" width="10" height="10" color="#fdf6f0"></a-plane>
+        
+          <!-- Leather Wall (front) -->
+          <a-plane position="0 2.5 -4.9" rotation="0 0 0" width="10" height="5" src="#leatherWall"></a-plane>
+        
+          <!-- Single Tire on Wall (left side) -->
+          <a-gltf-model src="#tireModel" position="-4 1.5 -4.8" rotation="0 90 0" scale="0.5 0.5 0.5"></a-gltf-model>
+        
+          <!-- Product Display Tires -->
+          <a-entity position="-1.5 0.3 -2.5">
+            <a-gltf-model src="#tireModel" scale="0.5 0.5 0.5"></a-gltf-model>
+            <a-gltf-model src="#sandalModel" position="0 0.6 0" scale="0.5 0.5 0.5"></a-gltf-model>
+          </a-entity>
+        
+          <a-entity position="0 0.3 -3">
+            <a-gltf-model src="#tireModel" scale="0.5 0.5 0.5"></a-gltf-model>
+            <a-gltf-model src="#sandalModel" position="0 0.6 0" scale="0.5 0.5 0.5"></a-gltf-model>
+          </a-entity>
+        
+          <a-entity position="1.5 0.3 -2.5">
+            <a-gltf-model src="#tireModel" scale="0.5 0.5 0.5"></a-gltf-model>
+            <a-gltf-model src="#sandalModel" position="0 0.6 0" scale="0.5 0.5 0.5"></a-gltf-model>
+          </a-entity>
+        
+          <!-- Palm Tree -->
+          <a-gltf-model src="#palmTreeModel" position="3 0 -4" scale="0.5 0.5 0.5" rotation="0 45 0"
+                        animation="property: rotation; dir: alternate; dur: 4000; easing: easeInOutSine; loop: true; to: 0 50 0"></a-gltf-model>
+        
+          <!-- Tagline -->
+          <a-text value="Simple. Elegant. Beautiful." position="0 2 -3" align="center" width="6" color="#222" font="mozillavr"></a-text>
+        
           <!-- Return Door -->
-          <a-entity id="returnDoor" position="0 1 -4">
+          <a-entity id="returnDoor" position="0 1 -5">
             <a-box width="1" height="2" depth="0.1" color="#6b4f30" opacity="0.95" class="clickable" teleport-back-to-showroom></a-box>
             <a-text value="Return to Main Room" align="center" position="0 1.4 0.1" color="#000" width="4"></a-text>
           </a-entity>
         </a-entity>
+        
+
+    
 
         <!-- Padre World -->
         <a-entity id="padreWorld" visible="false">
