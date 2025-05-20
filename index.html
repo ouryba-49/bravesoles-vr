@@ -14,6 +14,8 @@
       <button onclick="startExperience()" style="padding: 15px 30px; font-size: 18px; cursor: pointer;">Enter VR Experience</button>
     </div>
 
+
+
     <a-scene sound>
       <a-assets>
         <a-asset-item id="sandalModel" src="assets/sandal_shoes.glb"></a-asset-item>
@@ -30,7 +32,34 @@
         <img id="padreFlipflop" src="assets/Padre_Caramel_Leather_Front.jpg">
         <audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
       </a-assets>
-   
+          <!-- STORY MENU -->
+          <a-entity id="storyMenu" position="0 1.6 -2" visible="false" scale="1.5 1.5 1">
+            <a-plane color="#ffffff" width="4" height="2" opacity="0.97" material="shader: flat"></a-plane>
+          
+
+          <a-text value="Would you like to hear the Brave Soles story?"
+            color="#000000"
+            align="center"
+            width="3.8"
+            wrap-count="40"
+            position="0 0.6 0.01"
+            font="mozillavr">
+         </a-text>
+    
+
+        <!-- Listen Button -->
+        <a-plane id="playStoryBtn" width="1.2" height="0.4" color="#64c36e"
+                position="-0.7 -0.3 0.01" class="clickable" sound-menu-play>
+          <a-text value="Listen" align="center" color="#ffffff" width="2" position="0 0 0.01"></a-text>
+        </a-plane>
+
+        <!-- Skip Button -->
+        <a-plane id="skipStoryBtn" width="1.2" height="0.4" color="#AA3333"
+                position="0.7 -0.3 0.01" class="clickable" sound-menu-skip>
+          <a-text value="Skip" align="center" color="#ffffff" width="2" position="0 0 0.01"></a-text>
+        </a-plane>
+      </a-entity>
+    
       
         <!-- Linda World -->
         <a-entity id="lindaWorld" visible="false">
@@ -318,6 +347,16 @@
                 overlay.style.opacity = 0;
               }, 400);
             }
+            function startExperience() {
+              const canvas = document.getElementById('introCanvas');
+              canvas.style.transition = 'opacity 1s';
+              canvas.style.opacity = '0';
+              setTimeout(() => {
+                canvas.style.display = 'none';
+                document.querySelector('#storyMenu').setAttribute('visible', true);
+              }, 1000);
+            }
+
       
             function hideAllPanels() {
               ['lindaPanel', 'padrePanel'].forEach(id => {
@@ -448,6 +487,30 @@
               });
             }
           });
+
+          AFRAME.registerComponent('sound-menu-play', {
+            init: function () {
+              this.el.addEventListener('click', () => {
+                document.querySelector('#storyMenu').setAttribute('visible', false);
+                const camera = document.querySelector('#mainCamera');
+                camera.setAttribute('sound', 'src: #brandAudio; autoplay: true');
+                camera.addEventListener('sound-ended', () => {
+                  camera.setAttribute('sound', 'src: #ambientAudio; autoplay: true; loop: true; volume: 0.4');
+                });
+              });
+            }
+          });
+
+          AFRAME.registerComponent('sound-menu-skip', {
+            init: function () {
+              this.el.addEventListener('click', () => {
+                document.querySelector('#storyMenu').setAttribute('visible', false);
+                const camera = document.querySelector('#mainCamera');
+                camera.setAttribute('sound', 'src: #ambientAudio; autoplay: true; loop: true; volume: 0.4');
+              });
+            }
+          });
+
 
 
 
