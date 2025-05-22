@@ -31,9 +31,8 @@
         <img id="jasmineWhite" src="assets/Jasmine_Wht_Ca_LS2_Web.jpg">
         <img id="padreFlipflop" src="assets/Padre_Caramel_Leather_Front.jpg">
         <audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
-        <img id="cloudTexture" src="clouds.png">
         <a-asset-item id="tireModel" src="assets/tire.glb"></a-asset-item>
-        <a-asset-item id="palmTreeModel" src="assets/palm_tree.glb"></a-asset-item>
+        <a-asset-item id="palmTreeModel" src="assets/tree.glb"></a-asset-item>
         <img id="leatherTexture" src="assets/leather.jpg">
 
 
@@ -70,11 +69,9 @@
       
         <!-- LINDA WORLD -->
         <a-entity id="lindaWorld" visible="false">
-          <!-- Sky and Cloud Plane -->
-          <a-sky color="#add8e6"></a-sky>
-          <a-entity position="0 5 -10" animation="property: position; to: 0 5 10; loop: true; dur: 30000; easing: linear">
-            <a-plane src="#cloudTexture" width="20" height="10" material="transparent: true; opacity: 0.5"></a-plane>
-          </a-entity>
+          <!-- Sky  -->
+          <a-sky color="#f5f5dc"></a-sky> <!-- Beige sky -->
+
         
           <!-- Lighting -->
           <a-light type="ambient" color="#ffeecc" intensity="0.8"></a-light>
@@ -84,7 +81,7 @@
           <a-plane position="0 0 -1" rotation="-90 0 0" width="10" height="10" color="#fdf6f0"></a-plane>
         
           <!-- Leather Wall (front) -->
-          <a-plane position="0 2.5 -4.9" rotation="0 0 0" width="10" height="5" src="#leatherWall"></a-plane>
+          <a-plane position="0 2.5 -4.9" rotation="0 0 0" width="10" height="5" src="#leatherTexture"></a-plane>
         
           <!-- Single Tire on Wall (left side) -->
           <a-gltf-model src="#tireModel" position="-4 1.5 -4.8" rotation="0 90 0" scale="0.5 0.5 0.5"></a-gltf-model>
